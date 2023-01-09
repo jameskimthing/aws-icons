@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-static';
+import adapter from '@sveltejs/adapter-auto';
 import { vitePreprocess } from '@sveltejs/kit/vite';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -8,15 +8,7 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
-		adapter: adapter({
-            pages: 'docs',
-            assets: 'docs',
-            fallback: null,
-            precompress: false
-        }),
-        paths: {
-            base: '/aws-icons'
-        }
+		adapter: adapter()
 	}
 };
 
