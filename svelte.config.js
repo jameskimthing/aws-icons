@@ -6,10 +6,17 @@ const config = {
 	// Consult https://kit.svelte.dev/docs/integrations#preprocessors
 	// for more information about preprocessors
 	preprocess: vitePreprocess(),
-
-	kit: {
-		adapter: adapter()
-	}
+	kit: { adapter: adapter() }
+	// Gihub pages:
+	// kit: {
+	// 	adapter: adapter({
+    //         pages: 'docs',
+    //         assets: 'docs',
+    //     }),
+    //     paths: {
+    //         base: '/aws-icons'
+    //     }
+	// }
 };
 
 export default config;
