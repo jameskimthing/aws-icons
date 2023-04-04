@@ -7,7 +7,7 @@ const config = {
 	// for more information about preprocessors
 	preprocess: vitePreprocess(),
 	// kit: { adapter: adapter() }
-	// Gihub pages:
+	// Gihub pages: 
 	kit: {
 		adapter: adapter({
             pages: 'docs',
