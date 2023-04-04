@@ -1,12 +1,31 @@
 <script lang="ts">
+	import { alerts } from '$lib/alert';
 	import { fly } from 'svelte/transition';
-
-	export let text: string;
 </script>
 
-<div
-	transition:fly={{ x: -100, duration: 400 }}
-	class="fixed bottom-5 left-5 border-4 w-96 border-aws-orange bg-slate-800 text-white p-3 text-center"
->
-	{text}
+<div class="fixed bottom-5 left-5 z-50">
+	{#each Object.entries($alerts) as [key, info] (key)}
+		<div in:fly={{ x: -200, duration: 200 }} out:fly={{ x: -200, duration: 400 }} class="pb-4">
+			<div class={'border-t-4 ' + info['color']}>
+				<div class="rounded-b px-4 py-3 shadow-md" role="alert">
+					<div class="flex">
+						<div class="py-1">
+							<svg
+								class="h-6 w-6 mr-4"
+								fill="currentColor"
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 24 24"
+							>
+								<path d={info['icon']} fill-rule="evenodd" clip-rule="evenodd" />
+							</svg>
+						</div>
+						<div>
+							<p class="font-bold">{info['title']}</p>
+							<p class="text-sm">{info['body']}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	{/each}
 </div>

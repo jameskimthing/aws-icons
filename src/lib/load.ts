@@ -1,99 +1,50 @@
+import JSZip from 'jszip';
+import { loadResourceIcon } from './resource';
+import { loadCategoryIcon } from './category';
+import { loadArchitectureIcon } from './architecture';
+import { writable } from 'svelte/store';
+import { icons } from './icons';
+import { convertSvgToPng } from './utils';
+
+const url =
+	'https://d1.awsstatic.com/webteam/architecture-icons/q1-2023/Asset-Package_01312023.d59bb3e1bf7860fb55d4d737779e7c6fce1e35ae.zip';
+
+const is_loading = writable(true);
+const loaded_count = writable(0);
+const stage = writable('Fetching data...');
+
 async function load() {
-	const service_icons: { [key: string]: { [key: string]: string } } = {};
-	const category_icons: { [key: string]: string } = {};
-	const resource_icons: { [key: string]: { [key: string]: string } } = {};
+	const zipBlob = await (await fetch(url)).blob();
+	const zip = new JSZip();
 
-	const service_modules = import.meta.glob('$lib/aws/service-icons/**/*.svg', { as: 'raw' });
-	for (const path in service_modules) {
-		const arr = path.split('/');
+	stage.set('Unzipping...');
+	const unzipped = await zip.loadAsync(zipBlob);
 
-		const category = arr[arr.length - 2];
-		const service = arr[arr.length - 1].split('.')[0];
+	stage.set('Organizing...');
+	for (const [relativePath, file] of Object.entries(unzipped.files)) {
+		if (file.dir) continue;
+		if (relativePath.includes('.DS_Store')) continue;
 
-		if (!service_icons[category]) service_icons[category] = {};
-		service_icons[category][service] = await service_modules[path]();
+		const p = relativePath.split('/')[0].toLowerCase();
+
+		if (p.includes('macos')) continue;
+		else if (p.includes('resource')) await loadResourceIcon(unzipped, relativePath);
+		else if (p.includes('category')) await loadCategoryIcon(unzipped, relativePath);
+		else if (p.includes('architecture')) await loadArchitectureIcon(unzipped, relativePath);
+
+		loaded_count.update((c) => c + 1);
 	}
 
-	const category_modules = import.meta.glob('$lib/aws/category-icons/*.svg', { as: 'raw' });
-	for (const path in category_modules) {
-		const arr = path.split('/');
-
-		const category = arr[arr.length - 1].split('.')[0];
-
-		category_icons[category] = await category_modules[path]();
+	stage.set('Last touches...');
+	const sizes = [16, 32, 48, 64];
+	for (const size of sizes) {
+		icons['storage']['architecture']!['snowcone'][size]['png'] = await convertSvgToPng(
+			icons['storage']['architecture']!['snowcone'][size]['svg']!
+		);
 	}
 
-	const resource_modules = import.meta.glob('$lib/aws/resource-icons/**/*.svg', { as: 'raw' });
-	for (const path in resource_modules) {
-		const arr = path.split('/');
-
-		const category = arr[arr.length - 2];
-		const resource = arr[arr.length - 1].split('.')[0];
-
-		if (!resource_icons[category]) resource_icons[category] = {};
-		resource_icons[category][resource] = await resource_modules[path]();
-	}
-
-	return organize({
-		service_icons: service_icons,
-		category_icons: category_icons,
-		resource_icons: resource_icons
-	});
+	is_loading.set(false);
 }
 
-interface structure {
-	service_icons: {
-		[key: string]: {
-			[key: string]: string;
-		};
-	};
-	category_icons: {
-		[key: string]: string;
-	};
-	resource_icons: {
-		[key: string]: {
-			[key: string]: string;
-		};
-	};
-}
-
-function organize(icons: structure) {
-	const all_icons: {
-		[key: string]: {
-			resource_icons: { [key: string]: string };
-			service_icons: { [key: string]: string };
-			icon: string;
-		};
-	} = {};
-
-	// Check for categories not in category_icons
-	for (const service_category in icons['service_icons']) {
-		if (!Object.keys(icons['category_icons']).includes(service_category)) {
-			icons['category_icons'][service_category] = service_category;
-		}
-	}
-
-	for (const resource_category in icons['resource_icons']) {
-		if (!Object.keys(icons['category_icons']).includes(resource_category)) {
-			icons['category_icons'][resource_category] = resource_category;
-		}
-	}
-
-	// For all icons in category_icons
-	for (const category in icons['category_icons']) {
-		if (!all_icons[category]) {
-			all_icons[category] = {
-				resource_icons: {},
-				service_icons: {},
-				icon: icons['category_icons'][category]
-			};
-		}
-
-		all_icons[category]['service_icons'] = icons['service_icons'][category];
-		all_icons[category]['resource_icons'] = icons['resource_icons'][category];
-	}
-
-	return all_icons;
-}
-
+export { is_loading, loaded_count, stage };
 export { load };

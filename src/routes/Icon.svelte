@@ -1,22 +1,44 @@
 <script lang="ts">
-	import Alert from './Alert.svelte';
+	import { alertUser } from '$lib/alert';
+	import { image_type } from '$lib/icons';
 
-	export let svg: string;
-	if (svg === 'General-Icons') svg = '';
-	let show_alert: boolean = false;
+	export let icon: string;
+
+	let base: string = 'data:image/png;base64,';
+	$: base = $image_type === 'png' ? 'data:image/png;base64,' : 'data:image/svg+xml;base64,';
+
+	let image: HTMLImageElement;
+	async function copyBase64ToClipboard() {
+		if ($image_type === 'svg') {
+			const res = await fetch(base + icon);
+			const svgText = await res.text();
+			await navigator.clipboard.writeText(svgText);
+		} else {
+			try {
+				let url = base + icon;
+				const blob = await (await fetch(url)).blob();
+
+				navigator.clipboard.write([
+					new ClipboardItem({
+						'image/png': blob
+					})
+				]);
+			} catch (_) {
+				window.getSelection()!.removeAllRanges();
+				let range = document.createRange();
+				range.selectNode(image);
+				window.getSelection()!.addRange(range);
+				document.execCommand('copy');
+				window.getSelection()!.removeAllRanges();
+			}
+		}
+		alertUser('success', 'Success', `Copied ${$image_type} to clipboard`);
+	}
 </script>
 
 <div
-	class="cursor-pointer rounded active:bg-orange-900 hover:bg-aws-orange p-1 inline-block"
-	on:pointerup={async () => {
-		await navigator.clipboard.writeText(svg);
-		show_alert = true;
-		setTimeout(() => (show_alert = false), 1000);
-	}}
+	class="w-fit h-fit p-1 rounded cursor-pointer text-xs hover:bg-orange-500 active:bg-orange-900"
+	on:pointerup={copyBase64ToClipboard}
 >
-	{@html svg}
+	<img bind:this={image} src={base + icon} alt="(none)" />
 </div>
-
-{#if show_alert}
-	<Alert text="Copied SVG Icon" />
-{/if}
