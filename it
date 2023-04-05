@@ -1,0 +1,12 @@
+init.defaultbranch=main
+user.name=jameskimthing
+user.email=jameskimjaewon.abc@gmail.com
+core.repositoryformatversion=0
+core.filemode=true
+core.bare=false
+core.logallrefupdates=true
+remote.origin.url=https://github.com/jameskimthing/aws-icons.git
+remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+branch.main.remote=origin
+branch.main.merge=refs/heads/main
+credential.helper=store

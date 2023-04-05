@@ -1,6 +1,7 @@
 async function convertSvgToPng(baseSvg: string): Promise<string> {
 	return new Promise<string>((resolve, reject) => {
 		const svgData = 'data:image/svg+xml;base64,' + baseSvg;
+		// const svgData = URL.createObjectURL(new Blob([baseSvg], { type: 'image/svg+xml' }));
 		const image = new Image();
 		image.onload = async () => {
 			const canvas = document.createElement('canvas');
@@ -18,6 +19,20 @@ async function convertSvgToPng(baseSvg: string): Promise<string> {
 	});
 }
 
+async function resizeSvg(baseSvg: string, newDimension: number) {
+	const decodedSvg = window.atob(baseSvg); // decode base64 string to normal string
+	const parser = new DOMParser();
+	const svgElement = parser.parseFromString(decodedSvg, 'image/svg+xml').querySelector('svg');
+
+	svgElement!.setAttribute('width', `${newDimension}px`);
+	svgElement!.setAttribute('height', `${newDimension}px`);
+
+	const modifiedSvg = new XMLSerializer().serializeToString(svgElement!);
+	const encodedSvg = window.btoa(modifiedSvg); // encode modified string back to base64
+
+	return encodedSvg;
+}
+
 function cat(s: string) {
 	const val = s
 		.toLowerCase()
@@ -31,4 +46,4 @@ function cat(s: string) {
 	return val;
 }
 
-export { convertSvgToPng, cat };
+export { convertSvgToPng, cat, resizeSvg };

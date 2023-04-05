@@ -4,7 +4,7 @@ import { loadCategoryIcon } from './category';
 import { loadArchitectureIcon } from './architecture';
 import { writable } from 'svelte/store';
 import { icons } from './icons';
-import { convertSvgToPng } from './utils';
+import { convertSvgToPng, resizeSvg } from './utils';
 
 const url =
 	'https://d1.awsstatic.com/webteam/architecture-icons/q1-2023/Asset-Package_01312023.d59bb3e1bf7860fb55d4d737779e7c6fce1e35ae.zip';
@@ -37,10 +37,22 @@ async function load() {
 
 	stage.set('Last touches...');
 	const sizes = [16, 32, 48, 64];
+	const sizePixels = [24, 40, 64, 80];
 	for (const size of sizes) {
 		icons['storage']['architecture']!['snowcone'][size]['png'] = await convertSvgToPng(
 			icons['storage']['architecture']!['snowcone'][size]['svg']!
 		);
+		if (size !== 64) {
+			const toResize = sizePixels[sizes.indexOf(size)];
+			icons['games']['architecture']!['lumberyard'][size] ??= {};
+			icons['games']['architecture']!['lumberyard'][size]['svg'] = await resizeSvg(
+				icons['games']['architecture']!['lumberyard'][64]['svg']!,
+				toResize
+			);
+			icons['games']['architecture']!['lumberyard'][size]['png'] = await convertSvgToPng(
+				icons['games']['architecture']!['lumberyard'][size]['svg']!
+			);
+		}
 	}
 
 	is_loading.set(false);

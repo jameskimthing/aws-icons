@@ -17,12 +17,7 @@
 			try {
 				let url = base + icon;
 				const blob = await (await fetch(url)).blob();
-
-				navigator.clipboard.write([
-					new ClipboardItem({
-						'image/png': blob
-					})
-				]);
+				navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
 			} catch (_) {
 				window.getSelection()!.removeAllRanges();
 				let range = document.createRange();
