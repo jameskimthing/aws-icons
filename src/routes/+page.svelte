@@ -39,7 +39,7 @@
 	</div>
 {:else}
 	<div class="w-full">
-		{#each Object.entries(icons) as [category, content]}
+		{#each Object.entries(icons) as [category, content] (category)}
 			<Category {category} />
 		{/each}
 	</div>
