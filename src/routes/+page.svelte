@@ -26,7 +26,7 @@
 </div>
 
 <div class="py-32" />
-<div class="italic text-gray-300">
+<div class="italic text-gray-300 mb-6">
 	This icon pack may be incomplete, despite the fact that it has been directly sourced from the
 	official site, as the official site seems to have certain inconsistencies within the icon pack.
 	When copying an svg from this site, it will be copied as text, more specifically as xml+svg.

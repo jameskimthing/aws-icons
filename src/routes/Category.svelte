@@ -37,7 +37,7 @@
 
 {#if showCategory}
 	{#if showCategoryTitle}
-		<div class="flex flex-row p-2 pr-8 mt-6 mb-2 border-b-2 border-white w-fit items-center">
+		<div class="flex flex-row p-2 pr-8 mb-2 border-b-2 border-white w-fit items-center">
 			{#if category !== 'general icons'}
 				<Icon {icon} />
 			{/if}
