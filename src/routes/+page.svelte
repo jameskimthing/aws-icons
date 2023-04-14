@@ -29,7 +29,7 @@
 <div class="italic text-gray-300">
 	This icon pack may be incomplete, despite the fact that it has been directly sourced from the
 	official site, as the official site seems to have certain inconsistencies within the icon pack.
-	When copying from this site, an svg will be copied as text, more specifically as xml + svg.
+	When copying an svg from this site, it will be copied as text, more specifically as xml+svg.
 </div>
 
 {#if $is_loading}
