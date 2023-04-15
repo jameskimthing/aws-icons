@@ -8,12 +8,14 @@
 	load();
 </script>
 
-<div class="fixed top-10 inset-x-20 mx-auto bg-slate-900 h-56 rounded-3xl items-center z-10">
+<div
+	class="fixed top-10 inset-x-20 mx-auto bg-slate-900 h-64 sm:h-56 rounded-3xl items-center z-10"
+>
 	<div class="flex flex-col w-fit items-start mx-auto">
 		<div class="flex flex-col items-center">
-			<div class="pt-5 pb-3 text-3xl">Search:</div>
+			<div class="pt-5 pb-3 text-lg sm:text-3xl">Search:</div>
 			<input class="text-black bg-slate-300 rounded" bind:value={$search_text} />
-			<div class="pb-1 pt-1 pl-3">
+			<div class="pb-1 pt-1 pl-3 text-sm sm:text-base">
 				<input type="checkbox" bind:checked={$is_searching_categories} />
 				Search only for categories?
 			</div>
@@ -29,7 +31,9 @@
 <div class="italic text-gray-300 mb-6">
 	This icon pack may be incomplete, despite the fact that it has been directly sourced from the
 	official site, as the official site seems to have certain inconsistencies within the icon pack.
-	When copying an svg from this site, it will be copied as text, more specifically as xml+svg.
+	When copying an svg from this site, it will be copied as text, more specifically as xml+svg. If
+	the site has any problems, or if the icon pack seems to be incomplete, please contact me at
+	jameskimjaewon.abc@gmail.com
 </div>
 
 {#if $is_loading}
