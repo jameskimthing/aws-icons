@@ -29,11 +29,7 @@
 
 <div class="py-32" />
 <div class="italic text-gray-300 mb-6">
-	This icon pack may be incomplete, despite the fact that it has been directly sourced from the
-	official site, as the official site seems to have certain inconsistencies within the icon pack.
-	When copying an svg from this site, it will be copied as text, more specifically as xml+svg. If
-	the site has any problems, or if the icon pack seems to be incomplete, please contact me at
-	jameskimjaewon.abc@gmail.com
+	The icons have been directly sourced from the official site. Despite this, it may have some inconsistencies due to the limitations of the official pack itself. When copying an svg, it will be copied as: xml + svg. If the site has any problems, please contact me at jameskimjaewon.abc@gmail.com
 </div>
 
 {#if $is_loading}
