@@ -42,7 +42,7 @@
 	});
 </script>
 
-<div class="bg-slate-600 text-white w-screen min-h-screen p-10">
+<div class="bg-slate-600 text-white w-full min-h-screen p-10">
 	<slot />
 </div>
 
