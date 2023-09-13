@@ -8,7 +8,7 @@
 	load();
 </script>
 
-<div
+<section
 	class="fixed top-10 inset-x-20 mx-auto bg-slate-900 h-64 sm:h-56 rounded-3xl items-center z-10"
 >
 	<div class="flex flex-col w-fit items-start mx-auto">
@@ -25,12 +25,15 @@
 		</div>
 		<SizeButton />
 	</div>
-</div>
+</section>
 
 <div class="py-32" />
-<div class="italic text-gray-300 mb-6">
-	The icons have been directly sourced from the official site. Despite this, it may have some inconsistencies due to the limitations of the official pack itself. When copying an svg, it will be copied as: xml + svg. If the site has any problems, please contact me at jameskimjaewon.abc@gmail.com
-</div>
+<section class="italic text-gray-300 mb-6">
+	The icons have been directly sourced from the official site. Despite this, it may have some
+	inconsistencies due to the limitations of the official pack itself. When copying an svg, it will
+	be copied as: xml + svg. If the site has any problems, please contact me at
+	jameskimjaewon.abc@gmail.com
+</section>
 
 {#if $is_loading}
 	<div class="text-2xl p-16 flex flex-col">

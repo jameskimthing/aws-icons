@@ -42,6 +42,11 @@
 	});
 </script>
 
+<svelte:head>
+	<title>AWS Icons</title>
+	<meta name="Organized the AWS icons in a visual way." />
+</svelte:head>
+
 <div class="bg-slate-600 text-white w-full min-h-screen p-10">
 	<slot />
 </div>
