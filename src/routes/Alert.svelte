@@ -5,7 +5,7 @@
 
 <div class="fixed bottom-5 left-5 z-50">
 	{#each Object.entries($alerts) as [key, info] (key)}
-		<div in:fly={{ x: -200, duration: 200 }} out:fly={{ x: -200, duration: 400 }} class="pb-4">
+		<section in:fly={{ x: -200, duration: 200 }} out:fly={{ x: -200, duration: 400 }} class="pb-4">
 			<div class={'border-t-4 ' + info['color']}>
 				<div class="rounded-b px-4 py-3 shadow-md" role="alert">
 					<div class="flex">
@@ -19,13 +19,13 @@
 								<path d={info['icon']} fill-rule="evenodd" clip-rule="evenodd" />
 							</svg>
 						</div>
-						<div>
+						<div class="w-80">
 							<p class="font-bold">{info['title']}</p>
-							<p class="text-sm">{info['body']}</p>
+							<p class="text-sm whitespace-normal">{info['body']}</p>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 	{/each}
 </div>
