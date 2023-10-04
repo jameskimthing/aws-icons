@@ -36,7 +36,7 @@
 					alertUser(
 						'info',
 						'...error?',
-						'Unable to copy PNG to clipboard, copied as base64 text. This seems to be cause by firefox.'
+						"Unable to copy PNG to clipboard, copied as base64 text. This seems to be caused by firefox. Maybe try using chrome? Specific error comes from navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })])"
 					);
 				} catch (_) {
 					alertUser('error', 'Error!', 'Unknown error occurred');
